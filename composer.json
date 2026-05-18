@@ -1,0 +1,18 @@
+{
+    "name": "asmaa/clinic_project",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Asmaa\\ClinicProject\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "AsmaaHelmi",
+            "email": "96530441+AsmaaHelmi@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
