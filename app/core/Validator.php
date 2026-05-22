@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Core;
 class Validator{
     private $errors=[];
 public function required(string $value,string $fieldName){
@@ -53,13 +53,13 @@ public function length(string $value,string $fieldName,int $length){
 
 
 
-    public function validateURL(string $value){
-    if(!filter_var($value,FILTER_VALIDATE_URL)){
-                $this->errors[]=[$fieldName=>"this $fieldName must be valid link"];
+//     public function validateURL(string $value){
+//     if(!filter_var($value,FILTER_VALIDATE_URL)){
+//                 $this->errors[]=[$fieldName=>"this $fieldName must be valid link"];
 
 
-    }
-}
+//     }
+// }
 public function getErrors(){
     return $this->errors;
 }}
