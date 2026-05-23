@@ -35,7 +35,7 @@ public function execute($sql,$param=[]){
 
 
 =======
-<?php
+// <?php
 // namespace app\Database;
 // require_once __DIR__ . "../../vendor/autoload.php";
 // use PDO;
