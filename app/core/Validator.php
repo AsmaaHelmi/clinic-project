@@ -1,5 +1,5 @@
 <?php
-
+namespace App\core;
 class Validator{
     private $errors=[];
 public function required(string $value,string $fieldName){
@@ -63,7 +63,7 @@ public function length(string $value,string $fieldName,int $length){
 public function getErrors(){
     return $this->errors;
 }}
-$validator=new Validator();
+//$validator=new Validator();
 
 
 
