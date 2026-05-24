@@ -1,7 +1,7 @@
 <?php
 namespace App\Core;
 class Validator{
-    private $errors=[];
+    private ?string $errors=null;
 public function required(string $value,string $fieldName){
     if(empty($value)){
         //array_push(array,msg)
