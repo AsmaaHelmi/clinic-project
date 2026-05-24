@@ -1,5 +1,5 @@
 <?php
-require_once '../config/Database.php';
+require_once __DIR__ . '/../core/Database.php';
 
 class User extends Database {
 
@@ -13,19 +13,12 @@ class User extends Database {
             return "Email already exists";
         }
 
-        $hashed  = password_hash($password, PASSWORD_DEFAULT);
+        $hashed = password_hash($password, PASSWORD_DEFAULT);
 
         $stmt = mysqli_prepare($this->conn,
-            "INSERT INTO users (full_name, email, password, role) VALUES (?, ?, ?, 'patient')"
+            "INSERT INTO users (full_name, email, password, phone, role) VALUES (?, ?, ?, ?, 'patient')"
         );
-        mysqli_stmt_bind_param($stmt, "sss", $full_name, $email, $hashed);
-        mysqli_stmt_execute($stmt);
-        $user_id = mysqli_insert_id($this->conn);
-
-        $stmt = mysqli_prepare($this->conn,
-            "INSERT INTO patients (user_id, phone) VALUES (?, ?)"
-        );
-        mysqli_stmt_bind_param($stmt, "is", $user_id, $phone);
+        mysqli_stmt_bind_param($stmt, "ssss", $full_name, $email, $hashed, $phone);
         mysqli_stmt_execute($stmt);
 
         return true;
@@ -46,7 +39,7 @@ class User extends Database {
 
     public function logout() {
         session_destroy();
-        header("Location: login.php");
+        header("Location: ../auth/login.php");
         exit;
     }
 }
