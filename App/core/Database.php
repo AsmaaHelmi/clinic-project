@@ -34,7 +34,6 @@ public function execute($sql,$param=[]){
 
 
 
-=======
 <?php
 // namespace app\Database;
 // require_once __DIR__ . "../../vendor/autoload.php";
@@ -70,5 +69,5 @@ public function execute($sql,$param=[]){
 
 
 
->>>>>>> develop
+
 ?>
