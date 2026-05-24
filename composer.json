@@ -4,11 +4,9 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-<<<<<<< HEAD
-            "App\\": "app/"
-=======
+
             "App\\": "App/"
->>>>>>> develop
+
         }
     },
     "authors": [
