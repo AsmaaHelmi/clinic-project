@@ -1,5 +1,5 @@
 <?php
-namespace App\core;
+namespace App\Core;
 class Validator{
     private $errors=[];
 public function required(string $value,string $fieldName){
