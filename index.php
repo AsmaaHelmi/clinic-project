@@ -55,10 +55,10 @@ switch ($page) {
         require 'App/controllers/majorController.php';
         break;
     case 'book-appointment':
-        require 'App/views/patient/book-appointment.php';
+        require 'App/Views/patient/book-appointment.php';
         break;
     case 'appointment-controller':
-        require 'App/controllers/AppointmentController.php';
+        require 'App/Controllers/AppointmentController.php';
         break;
 }
 

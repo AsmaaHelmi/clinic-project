@@ -63,17 +63,6 @@ public function length(string $value,string $fieldName,int $length){
 public function getErrors(){
     return $this->errors;
 }}
-$validator=new Validator();
-
-
-
-
-
-
-
-
-
-
 
 
 

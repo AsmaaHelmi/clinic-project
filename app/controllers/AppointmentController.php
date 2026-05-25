@@ -37,6 +37,7 @@ if (Helper::checkRequestMethod()) {
     if (!empty($validator->getErrors())) {
         Helper::setMessage('danger','Phone is required' );
         Helper::redirect('?page=book-appointment');
+        exit;
     }
 
     if ($appointmentDate < date('Y-m-d')) {
@@ -45,14 +46,16 @@ if (Helper::checkRequestMethod()) {
             'Invalid appointment date'
         );
         Helper::redirect('?page=book-appointment');
+        exit;
 
     }
 
     $appointment = new Appointment($patientId, $doctorId, $phone, $appointmentDate, $appointmentTime);
 
     if ($appointment->isBooked($pdo)) {
-        Helper::setMessage('danger', 'Appointment already booked');
+        Helper::setMessage('danger', 'Selected time is no longer available');
         Helper::redirect('?page=book-appointment');
+        exit;
     }
     
     $result = $appointment->create($pdo);
@@ -68,5 +71,6 @@ if (Helper::checkRequestMethod()) {
     }
 
     Helper::redirect('?page=book-appointment');
+    exit;
 
 }
