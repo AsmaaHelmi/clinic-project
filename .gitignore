@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 /vendor/
 .env
 .vscode/
 .idea/
 .DS_Store
+=======
+/vendor/
+.env
+.vscode/
+.idea/
+.DS_Store
+>>>>>>> develop
 Thumbs.db
