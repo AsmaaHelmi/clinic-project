@@ -1,6 +1,6 @@
 <?php
 use App\Models\Major;
-$majors=Major::getAll($pdo);?>
+$majors = Major::getAll($pdo); ?>
 
 
         <div class="container">
@@ -10,25 +10,25 @@ $majors=Major::getAll($pdo);?>
                     <li class="breadcrumb-item active" aria-current="page">majors</li>
                 </ol>
             </nav>
-            
-					
-							
-							
+
+
+
+
             <div class="majors-grid">
                 	<?php
-foreach($majors ?? [] as $major):
-							?>	
+                        foreach ($majors ?? [] as $major):
+                    ?>
                 <div class="card p-2" style="width: 18rem;">
                     <img src="public/assets/images/major.jpg" class="card-img-top rounded-circle card-image-circle"
                         alt="major">
                     <div class="card-body d-flex flex-column gap-1 justify-content-center">
-                        <h4 class="card-title fw-bold text-center"><?= $major->getTitle();?></h4>
-                        <p class="card-title fw-bold text-center"><?= $major->getDescription();?></p>
+                        <h4 class="card-title fw-bold text-center"><?php echo $major->getTitle();?></h4>
+                        <p class="card-title fw-bold text-center"><?php echo $major->getDescription();?></p>
 
                         <a href="index.php?page=doctors" class="btn btn-outline-primary card-button">Browse Doctors</a>
                     </div>
                 </div>
-                <?php endforeach;?>
+                <?php endforeach; ?>
 
             <nav class="mt-5" aria-label="navigation">
                 <ul class="pagination justify-content-center">
@@ -50,4 +50,3 @@ foreach($majors ?? [] as $major):
             </nav>
         </div>
     </div>
-                           

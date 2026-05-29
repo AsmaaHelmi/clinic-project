@@ -21,7 +21,8 @@ if (Helper::checkRequestMethod()) {
         Helper::setMessage('danger','All fields are required');
         Helper::redirect('?page=book-appointment');
     }
-
+var_dump($_SESSION);
+die();
     $patientId = $_SESSION['user']['id'];
 
     $doctorId = (int) $_POST['doctor_id'];

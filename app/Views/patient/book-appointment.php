@@ -2,6 +2,7 @@
 
 use App\Models\Appointment;
 use App\Models\Doctor;
+use App\Core\Helper;
 
 $doctorId = $_GET['id'] ?? null;
 
@@ -37,7 +38,7 @@ $doctor = Doctor::findById($pdo, $doctorId);
 
             <li class="breadcrumb-item active" aria-current="page">
 
-                <?= $doctor['name'] ?>
+                 <?= $doctor->getName() ?>
 
             </li>
 
@@ -51,7 +52,7 @@ $doctor = Doctor::findById($pdo, $doctorId);
         <div class="details d-flex gap-2 align-items-center">
 
             <img
-                src="<?= $doctor['image'] ?>"
+                src="<?= $doctor->getImage() ?>"
                 alt="doctor"
                 class="img-fluid rounded-circle"
                 height="150"
@@ -63,19 +64,17 @@ $doctor = Doctor::findById($pdo, $doctorId);
 
                 <h4 class="card-title fw-bold">
 
-                    <?= $doctor['name'] ?>
-
+                    <?= $doctor->getName() ?>
                 </h4>
 
                 <h6 class="card-title fw-bold">
-
-                    <?= $doctor['major_title'] ?>
+                    <?= $doctor->getMajorTitle() ?>
 
                 </h6>
 
                 <p>
 
-                    <?= $doctor['description'] ?>
+                    <?= $doctor->getDescription() ?>
 
                 </p>
 
@@ -86,7 +85,7 @@ $doctor = Doctor::findById($pdo, $doctorId);
         <hr />
 
 
-        <?php showMessage(); ?>
+        <?php Helper::showMessage(); ?>
 
 
         <?php
