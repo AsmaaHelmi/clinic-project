@@ -4,146 +4,98 @@ namespace App\Models;
 
 use PDO;
 
-class Doctor {
+class Doctor
+{
 
-    public int $id;
-    public int $user_id;
-    public int $major_id;
-    public string $phone;
-    public string $email;
-    public string $image;
-    public string $description;
+    private int $id;
+    private int $user_id;
+    private int $major_id;
+    private string $phone;
+    private string $image;
+    private string $description;
+
+    private string $name;
+    private string $major_title;
 
 
     public function __construct(
-        $id,
-        $user_id,
-        $major_id,
-        $phone,
-        $email,
-        $image,
-        $description
-    ){
+        int $id,
+        int $user_id,
+        int $major_id,
+        string $phone,
+        string $image,
+        string $description,
+        string $name = '',
+        string $major_title = ''
+    ) {
 
         $this->id = $id;
         $this->user_id = $user_id;
         $this->major_id = $major_id;
 
         $this->phone = $phone;
-        $this->email = $email;
         $this->image = $image;
         $this->description = $description;
+
+        $this->name = $name;
+        $this->major_title = $major_title;
     }
 
 
-    // ==== GETTERS ====
+    // ===== GETTERS =====
 
-    public function getId(){
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function getUserId(){
+    public function getUserId(): int
+    {
         return $this->user_id;
     }
 
-    public function getMajorId(){
+    public function getMajorId(): int
+    {
         return $this->major_id;
     }
 
-    public function getPhone(){
+    public function getPhone(): string
+    {
         return $this->phone;
     }
 
-    public function getEmail(){
-        return $this->email;
-    }
-    public function getImage(){
+    public function getImage(): string
+    {
         return $this->image;
     }
 
-    public function getDescription(){
+    public function getDescription(): string
+    {
         return $this->description;
     }
 
-
-    // ==== CREATE ====
-
-    public function create(
-        PDO $pdo,
-        string $name,
-        string $user_id,
-        int $major_id,
-        string $phone,
-        string $email,
-        string $image,
-        string $description
-    )
+    public function getName(): string
     {
-        // insert user
+        return $this->name;
+    }
 
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        $userSql = "INSERT INTO users(name,email,password,role)
-                    VALUES(?,?,?,?)";
-
-        $userStmt = $pdo->prepare($userSql);
-
-        $userSuccess = $userStmt->execute([
-            $name,
-            $email,
-            $hashedPassword,
-            'doctor'
-        ]);
-
-
-        if($userSuccess){
-
-            $user_id = $pdo->lastInsertId();
-
-            // insert doctor
-
-            $doctorSql = "INSERT INTO doctors
-            (user_id,major_id,phone,email,image,description)
-            VALUES(?,?,?,?,?,?)";
-
-            $doctorStmt = $pdo->prepare($doctorSql);
-
-            $doctorSuccess = $doctorStmt->execute([
-                $user_id,
-                $major_id,
-                $phone,
-                $email,
-                $image,
-                $description
-            ]);
-
-
-            if($doctorSuccess){
-
-                $doctor_id = $pdo->lastInsertId();
-
-                return new self(
-                    $doctor_id,
-                    $name,
-                    $user_id,
-                    $major_id,
-                    $phone,
-                    $email,
-                    $image,
-                    $description
-                );
-            }
-        }
+    public function getMajorTitle(): string
+    {
+        return $this->major_title;
     }
 
 
+    // ===== GET ALL =====
 
-    // ==== GET ALL ====
-
-    public function getAll(PDO $pdo){
+    public static function getAll(PDO $pdo): array
+    {
 
         $sql = "
-        SELECT doctors.*, users.name, majors.title AS major_title
+
+        SELECT
+            doctors.*,
+            users.name,
+            majors.title AS major_title
 
         FROM doctors
 
@@ -152,6 +104,7 @@ class Doctor {
 
         JOIN majors
         ON doctors.major_id = majors.id
+
         ";
 
         $stmt = $pdo->query($sql);
@@ -160,7 +113,7 @@ class Doctor {
 
         $doctors = [];
 
-        foreach($rows as $doctor){
+        foreach ($rows as $doctor) {
 
             $doctors[] = new self(
 
@@ -168,9 +121,11 @@ class Doctor {
                 $doctor['user_id'],
                 $doctor['major_id'],
                 $doctor['phone'],
-                $doctor['email'],
                 $doctor['image'],
-                $doctor['description']
+                $doctor['description'],
+                $doctor['name'],
+                $doctor['major_title']
+
             );
         }
 
@@ -178,87 +133,78 @@ class Doctor {
     }
 
 
+    // ===== FIND BY ID =====
 
-    // ==== UPDATE ====
+    public static function findById(PDO $pdo, int $id): ?Doctor
+    {
 
-    public function update(
-        PDO $pdo,
-        int $id,
-        int $major_id,
-        int $user_id,
-        string $email,
-        string $phone,
-        string $image,
-        string $description
-    ){
+        $sql = "
 
-        $doctor = self::findById($pdo, $id);
+        SELECT
+            doctors.*,
+            users.name,
+            majors.title AS major_title
 
-        // update users
+        FROM doctors
 
-        $userSql = "
-        UPDATE users
-        SET name = ?, email = ?
-        WHERE id = ?
+        JOIN users
+        ON doctors.user_id = users.id
+
+        JOIN majors
+        ON doctors.major_id = majors.id
+
+        WHERE doctors.id = ?
+
         ";
 
-        $userStmt = $pdo->prepare($userSql);
+        $stmt = $pdo->prepare($sql);
 
-        $userStmt->execute([
-            $name,
-            $email,
-            $doctor->getUserId()
-        ]);
+        $stmt->execute([$id]);
 
+        $doctor = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // update doctors
+        if (!$doctor) {
 
-        $doctorSql = "
-        UPDATE doctors
+            return null;
 
-        SET
-        major_id = ?,
-        phone = ?,
-        email = ?,
-        image = ?,
-        description = ?
+        }
 
-        WHERE id = ?
-        ";
+        return new self(
 
-        $doctorStmt = $pdo->prepare($doctorSql);
+            $doctor['id'],
+            $doctor['user_id'],
+            $doctor['major_id'],
+            $doctor['phone'],
+            $doctor['image'],
+            $doctor['description'],
+            $doctor['name'],
+            $doctor['major_title']
 
-        return $doctorStmt->execute([
-            $id,
-            $user_id,
-            $major_id,
-            $phone,
-            $email,
-            $image,
-            $description
-        ]);
+        );
     }
 
 
+    // ===== DELETE =====
 
-    // ==== DELETE ====
-
-    public function delete(PDO $pdo, int $id){
+    public static function delete(PDO $pdo, int $id): bool
+    {
 
         $doctor = self::findById($pdo, $id);
 
-        // delete doctor
+        if (!$doctor) {
 
-        $doctorSql = "DELETE FROM doctors WHERE id=?";
+            return false;
+
+        }
+
+        $doctorSql = "DELETE FROM doctors WHERE id = ?";
 
         $doctorStmt = $pdo->prepare($doctorSql);
 
         $doctorStmt->execute([$id]);
 
 
-        // delete user
-
-        $userSql = "DELETE FROM users WHERE id=?";
+        $userSql = "DELETE FROM users WHERE id = ?";
 
         $userStmt = $pdo->prepare($userSql);
 
@@ -266,7 +212,4 @@ class Doctor {
             $doctor->getUserId()
         ]);
     }
-
 }
-
-?>
