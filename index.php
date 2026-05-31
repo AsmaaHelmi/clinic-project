@@ -30,6 +30,15 @@ $adminpages=[
     'create-major',
     'store-major',
     'update-major',
+    'admin-doctor',
+    'create-doctor',
+    'update-doctor',
+    'store-doctor',
+    'admin-patients',
+    'admin-login',
+    'admin-logout',
+    'admin-doctors',
+
 
 
 ];
@@ -81,6 +90,82 @@ switch($page){
                 require 'App/controllers/majorController.php';
 
          break;
+            case "login":
+        require "app/views/auth/login.php";
+        break;
+    case "register":
+        require "app/views/auth/register.php";
+        break;
+    case "logout":
+        require "app/views/auth/logout.php";
+        break;
+   
+    
+       case "admin-doctor":
+            require "App/Views/Admin/doctor/admin-doctor.php";
+            break;
+   
+  case "doctors":
+        require "App/Views/doctor.php";
+        break;
+    case "create-doctor":
+        require "App/Views/Admin/doctor/create-doctor.php";
+        break;
+     case "store-doctor":
+        require 'App/controllers/doctorController.php';
+        break;
+        case "update-doctor":
+      
+        require "App/Views/Admin/doctor/update-doctor.php";
+        break;
+       
+         case "delete-doctor":
+      
+                require 'App/Controllers/doctorController.php';
+
+         break;
+          case "admin-patients":
+        require "App/Views/Admin/users.php";
+        break;
+    case "admin-doctors":
+        require "App/Views/Admin/doctors.php";
+        break;
+    case "admin-login":
+        require "App/Views/Admin/login.php";
+        break;
+    case "admin-logout":
+        require "App/Views/Admin/logout.php";
+        break;
+
+   
+    case "patient-dashboard":
+        require "App/Views/patient/patient-dashboard.php";
+        break;
+   
+  
+          case 'book-appointment':
+        require 'App/Views/patient/book-appointment.php';
+        break;
+    case 'appointment-controller':
+        require 'App/controllers/AppointmentController.php';
+        break;
+    case 'patient-profile':
+        require 'App/Views/patient/profile.php';
+        break;
+    case 'cancel-appointment':
+
+        require 'App/Controllers/CancelAppointmentController.php';
+        break;
+
+    case "login":
+        require "App/Views/Auth/login.php";
+        break;
+    case "register":
+        require "App/Views/Auth/register.php";
+        break;
+    case "logout":
+        require "App/Views/Auth/logout.php";
+        break;
 }
 
 if($isAdmin){

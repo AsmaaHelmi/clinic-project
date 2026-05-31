@@ -1,6 +1,12 @@
 <?php
 use App\Models\Major;
-$majors=Major::getAll($pdo);?>
+use App\Models\Doctor;
+
+$majors=Major::getAll($pdo);
+$doctors = Doctor::getAll($pdo);
+// var_dump($doctors);
+// exit; ?>
+
 
 <body>
 
@@ -50,15 +56,20 @@ foreach($majors ?? [] as $major):
             <h2 class="h1 fw-bold text-center my-4">doctors</h2>
 
             <section class="splide home__slider__doctors mb-5">
+                <?php 
+foreach($doctors ?? [] as $doctor):
+    // var_dump($doctor);
+    // exit;
+                ?>
                 <div class="splide__track ">
                     <ul class="splide__list">
                         <li class="splide__slide">
                             <div class="card p-2" style="width: 18rem;">
-                                <img src="public/assets/images/major.jpg"
+                                <img src=""
                                     class="card-img-top rounded-circle card-image-circle" alt="major">
                                 <div class="card-body d-flex flex-column gap-1 justify-content-center">
-                                    <h4 class="card-title fw-bold text-center">Doctor Name</h4>
-                                    <h6 class="card-title fw-bold text-center">Major</h6>
+                                    <h4 class="card-title fw-bold text-center"><?= $doctor->getName(); ?></h4>
+                                    <h6 class="card-title fw-bold text-center"><?= $doctor->getMajorId(); ?></h6>
                                     <a href="./doctors/doctor.html" class="btn btn-outline-primary card-button">Book an
                                         appointment</a>
                                 </div>
@@ -68,19 +79,8 @@ foreach($majors ?? [] as $major):
 
 
 
-
-                        <li class="splide__slide">
-                            <div class="card p-2" style="width: 18rem;">
-                                <img src="public/assets/images/major.jpg"
-                                    class="card-img-top rounded-circle card-image-circle" alt="major">
-                                <div class="card-body d-flex flex-column gap-1 justify-content-center">
-                                    <h4 class="card-title fw-bold text-center">Doctor Name</h4>
-                                    <h6 class="card-title fw-bold text-center">Major</h6>
-                                    <a href="./doctors/doctor.html" class="btn btn-outline-primary card-button">Book an
-                                        appointment</a>
-                                </div>
-                            </div>
-                        </li>
+<?php endforeach;?>
+                        
                     </ul>
                 </div>
             </section>
