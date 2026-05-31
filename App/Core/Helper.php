@@ -22,12 +22,25 @@ class Helper
         ];
     }
 
-    public static function showMessage()
+   public static function showMessage()
     {
+
         if (isset($_SESSION['message'])) {
-            echo $_SESSION['message']['text'];
+
+             echo '
+
+        <div class="alert alert-' . $_SESSION['message']['type'] . '">
+
+            ' . $_SESSION['message']['text'] . '
+
+        </div>
+
+        ';
+
             unset($_SESSION['message']);
+
         }
+
     }
 
 

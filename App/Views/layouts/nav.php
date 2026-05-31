@@ -1,24 +1,116 @@
+
 <div class="page-wrapper">
-        <nav class="navbar navbar-expand-lg navbar-expand-md bg-blue sticky-top">
-            <div class="container">
-                <div class="navbar-brand">
-                    <a class="fw-bold text-white m-0 text-decoration-none h3" href="index.php?page=home">VCare</a>
-                </div>
-                <button class="navbar-toggler btn-outline-light border-0 shadow-none" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                    <div class="d-flex gap-3 flex-wrap justify-content-center" role="group">
-                        <a type="button" class="btn btn-outline-light navigation--button" href="index.php?page=home">Home</a>
-                        <a type="button" class="btn btn-outline-light navigation--button"
-                            href="index.php?page=major">majors</a>
-                        <a type="button" class="btn btn-outline-light navigation--button"
-                            href="index.php?page=doctors">Doctors</a>
-                        <a type="button" class="btn btn-outline-light navigation--button" href="index.php?page=login">login</a>
-                    </div>
-                </div>
+
+    <nav class="navbar navbar-expand-lg navbar-expand-md bg-blue sticky-top">
+
+        <div class="container">
+
+            <div class="navbar-brand">
+
+                <a
+                    class="fw-bold text-white m-0 text-decoration-none h3"
+                    href="index.php?page=home"
+                >
+                    VCare
+                </a>
+
             </div>
-        </nav>
-   
+
+            <button
+                class="navbar-toggler btn-outline-light border-0 shadow-none"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+            <div
+                class="collapse navbar-collapse justify-content-end"
+                id="navbarSupportedContent"
+            >
+
+                <div
+                    class="d-flex gap-3 flex-wrap justify-content-center"
+                    role="group"
+                >
+
+                    <a
+                        type="button"
+                        class="btn btn-outline-light navigation--button"
+                        href="index.php?page=home"
+                    >
+                        Home
+                    </a>
+
+                    <a
+                        type="button"
+                        class="btn btn-outline-light navigation--button"
+                        href="index.php?page=major"
+                    >
+                        Majors
+                    </a>
+
+                    <a
+                        type="button"
+                        class="btn btn-outline-light navigation--button"
+                        href="index.php?page=doctors"
+                    >
+                        Doctors
+                    </a>
+
+                    <?php if (isset($_SESSION['user'])): ?>
+
+                        <?php if ($_SESSION['user']['role'] === 'patient'): ?>
+
+                            <a
+                                type="button"
+                                class="btn btn-outline-light navigation--button"
+                                href="index.php?page=patient-profile"
+                            >
+                                Profile
+                            </a>
+
+                        <?php endif; ?>
+
+                        <a
+                            type="button"
+                            class="btn btn-outline-light navigation--button"
+                            href="index.php?page=logout"
+                        >
+                            Logout
+                        </a>
+
+                    <?php else: ?>
+
+                        <a
+                            type="button"
+                            class="btn btn-outline-light navigation--button"
+                            href="index.php?page=login"
+                        >
+                            Login
+                        </a>
+
+                        <a
+                            type="button"
+                            class="btn btn-outline-light navigation--button"
+                            href="index.php?page=register"
+                        >
+                            Register
+                        </a>
+
+                    <?php endif; ?>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
