@@ -6,8 +6,11 @@
 				</a>
 				<div class="sidebar">
 					<nav class="mt-2">
+						
 						<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-							<li class="nav-item">
+						<?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') :?>
+							
+						<li class="nav-item">
 								<a href="index.php?page=dashboard" class="nav-link">
 									<i class="nav-icon fas fa-tachometer-alt"></i>
 									<p>Dashboard</p>
@@ -25,13 +28,37 @@
 									<p>Patients</p>
 								</a>
 							</li>
-							<li class="nav-item">
-								<a href="index.php?page=doctors" class="nav-link">
+								<li class="nav-item">
+								<a href="index.php?page=admin-doctor" class="nav-link">
 									<i class="nav-icon fas fa-user-md"></i>
 									<p>Doctors</p>
 								</a>
 							</li>
-						</ul>
+							<li class="nav-item">
+								<a href="index.php?page=admin-major" class="nav-link">
+									<i class="nav-icon fas fa-user-md"></i>
+									<p>Majors</p>
+								</a>
+							</li>
+						
+						  
+<?php else :?>
+	
+							<li class="nav-item">
+								<a href="index.php?page=admin-doctor" class="nav-link">
+									<i class="nav-icon fas fa-user-md"></i>
+									<p>Doctors</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="index.php?page=admin-major" class="nav-link">
+									<i class="nav-icon fas fa-user-md"></i>
+									<p>Majors</p>
+								</a>
+							</li>
+							</ul>
+							<?php endif;?>
+						
 					</nav>
 				</div>
 			</aside>
