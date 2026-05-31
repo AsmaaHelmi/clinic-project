@@ -57,8 +57,7 @@ foreach($majors ?? [] as $major):
             <section class="splide home__slider__doctors mb-5">
                 <?php 
 foreach($doctors ?? [] as $doctor):
-    // var_dump($doctor);
-    // exit;
+  
                 ?>
                 <div class="splide__track ">
                     <ul class="splide__list">
