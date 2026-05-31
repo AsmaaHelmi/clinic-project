@@ -31,7 +31,6 @@ $doctors = Doctor::getAll($pdo);
             </div>
         </div>
     </div>
-    
     <div class="container">
 
         <h2 class="h1 fw-bold text-center my-4">majors</h2>
