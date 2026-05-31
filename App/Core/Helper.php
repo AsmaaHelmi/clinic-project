@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Core;
 
 class Helper
@@ -29,9 +30,16 @@ class Helper
         }
     }
 
+
+
+
+
+
+
     public static function redirect($page)
     {
         header("Location: {$page}");
         exit;
     }
+
 }

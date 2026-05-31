@@ -17,15 +17,18 @@
          <!-- Main content -->
 
          <section class="content">
-             <?php if(isset($_SESSION['errors'])):
-                //var_dump($_SESSION['errors']);
-                //exit; ?>
-                 <?php foreach($_SESSION['errors'] as $error): ?>
-                 <p><?=$error=implode(', ', $error)  ?></p>
-                 <?php endforeach; ?>
-             </div>
-             <?php unset($_SESSION['errors']); ?>
-             <?php endif; ?>
+            <?php if(isset($_SESSION['errors'])): ?>
+
+          <?php// foreach($_SESSION['errors'] as $error): ?>
+
+          <p class="text-danger"><?= $_SESSION['errors'] ?></p>
+
+          <?php //endforeach; ?>
+
+          <?php unset($_SESSION['errors']); ?>
+
+          <?php endif; ?>
+
 
 
              <!-- Default box -->
