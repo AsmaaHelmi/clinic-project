@@ -97,7 +97,7 @@ $doctors = Doctor::getAll($pdo);
             doctors
         </h2>
 
-            <div class="d-flex flex-wrap gap-4 justify-content-center">
+            <!-- <div class="d-flex flex-wrap gap-4 justify-content-center">
 
                     <?php foreach($doctors ?? [] as $doctor): ?>
 
@@ -143,16 +143,74 @@ $doctors = Doctor::getAll($pdo);
                         
 
                     <?php endforeach; ?>
-                    </div>
+            </div> -->
+            
+     <section class="splide home__slider__doctors mb-5">
+
+        <div class="splide__track">
+
+            <ul class="splide__list">
+
+                <?php foreach($doctors ?? [] as $doctor): ?>
+
+                    <li class="splide__slide">
+
+                        <div class="card p-2 mx-auto" style="width: 18rem;">
+
+                            <img
+                                src="<?= $doctor->getImage(); ?>"
+                                class="card-img-top rounded-circle card-image-circle"
+                                alt="doctor"
+                            >
+
+                            <div class="card-body d-flex flex-column gap-1 justify-content-center">
+
+                                <h4 class="card-title fw-bold text-center">
+
+                                    <?= $doctor->getName(); ?>
+
+                                </h4>
+
+                                <h6 class="card-title fw-bold text-center">
+
+                                    <?= $doctor->getMajorTitle(); ?>
+
+                                </h6>
+
+                                <p class="text-center">
+
+                                    <?= $doctor->getDescription(); ?>
+
+                                </p>
+
+                                <a
+                                    href="?page=book-appointment&id=<?= $doctor->getId(); ?>"
+                                    class="btn btn-outline-primary card-button"
+                                >
+                                    Book an appointment
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                <?php endforeach; ?>
+
+            </ul>
+
+        </div>
+
+        </section>
 
                 
 
-            </div>
-
+        
         
 
     </div>
-    <div class="banner container d-block d-lg-grid d-md-block d-sm-block">
+<div class="banner container d-block d-lg-grid d-md-block d-sm-block">
             <div class="info">
                 <div class="info__details">
                     <img src="https://d1aovdz1i2nnak.cloudfront.net/vezeeta-web-reactjs/55619/_next/static/images/medical-care-icon.svg"
@@ -226,8 +284,5 @@ $doctors = Doctor::getAll($pdo);
             <div class="bottom--right bg-blue text-white">
                 <img src="public/assets/images/banner.jpg" class="img-fluid banner-img">
             </div>
-    </div>
+</div>
     
-
-
-   

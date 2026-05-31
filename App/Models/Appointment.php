@@ -162,19 +162,38 @@ class Appointment
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public static function delete(PDO $pdo, int $appointmentId): bool
+    // public static function delete(PDO $pdo, int $appointmentId): bool
+    // {
+
+    //     $sql = "
+
+    // DELETE FROM appointments
+
+    // WHERE id = ?
+
+    // ";
+
+    //     $stmt = $pdo->prepare($sql);
+
+    //     return $stmt->execute([$appointmentId]);
+    // }
+
+    public static function cancel(PDO $pdo, int $appointmentId): bool
     {
 
-        $sql = "
+            $sql = "
 
-    DELETE FROM appointments
+            UPDATE appointments
 
-    WHERE id = ?
+            SET status = 'cancelled'
 
-    ";
+            WHERE id = ?
+
+             ";
 
         $stmt = $pdo->prepare($sql);
 
         return $stmt->execute([$appointmentId]);
     }
+
 }

@@ -1,4 +1,3 @@
-
 const doctors_splide = new Splide(".home__slider__doctors", {
   type: "loop",
   gap: "1.5rem",

@@ -44,6 +44,9 @@ switch ($page) {
     case "major":
         require "App/Views/major.php";
         break;
+    case "doctors":
+        require "App/Views/doctors.php";
+        break;
     case "admin-home":
         require "App/Views/Admin/dashboard.php";
         break;
@@ -59,6 +62,23 @@ switch ($page) {
         break;
     case 'appointment-controller':
         require 'App/controllers/AppointmentController.php';
+        break;
+    case 'patient-profile':
+        require 'App/Views/patient/profile.php';
+        break;
+    case 'cancel-appointment':
+
+        require 'App/Controllers/CancelAppointmentController.php';
+        break;
+
+    case "login":
+        require "App/Views/Auth/login.php";
+        break;
+    case "register":
+        require "App/Views/Auth/register.php";
+        break;
+    case "logout":
+        require "App/Views/Auth/logout.php";
         break;
 }
 

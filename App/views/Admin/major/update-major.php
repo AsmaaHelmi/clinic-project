@@ -1,4 +1,4 @@
-   <?php
+<?php
    use App\Models\Major;
  
 ?>
@@ -64,7 +64,7 @@
                              </div>
                          </div>
                      </div>
-                     <?php// endforeach;?>
+                     <?//php endforeach;?>
                      <div class="pb-5 pt-3">
                          <button class="btn btn-primary" type="submit">Update</button>
                          <a href="" class="btn btn-outline-dark ml-3">Cancel</a>

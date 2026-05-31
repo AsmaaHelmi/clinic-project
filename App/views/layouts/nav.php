@@ -16,9 +16,19 @@
                             href="index.php?page=major">majors</a>
                         <a type="button" class="btn btn-outline-light navigation--button"
                             href="index.php?page=doctors">Doctors</a>
+                        <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'patient'): ?>
+
+                            <a
+                            type="button"
+                            class="btn btn-outline-light navigation--button"
+                            href="index.php?page=patient-profile"
+                            >
+                            Profile
+                            </a>
+
+                        <?php endif; ?>
                         <a type="button" class="btn btn-outline-light navigation--button" href="index.php?page=login">login</a>
                     </div>
                 </div>
             </div>
         </nav>
-   
