@@ -69,57 +69,52 @@ class doctorController {
                 break;
 
 
-            case 'update':
+           case 'update-doctor':
 
-                if($_SERVER['REQUEST_METHOD'] === 'POST'){
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-                    $id = (int) $_POST['id'];
+                    $id = (int) ($_POST['id'] ?? 0);
 
-                    $data = [
-                        'name' => trim($_POST['name']),
-                        'email' => trim($_POST['email']?? ''),
-                        'password' => trim($_POST['password']),
+                 $data = [
+    'name' => trim($_POST['name'] ?? ''),
+    'email' => trim($_POST['email'] ?? ''),
+    'phone' => trim($_POST['phone'] ?? ''),
+    'major_id' => (int)($_POST['major_id'] ?? 0),
+    'description' => trim($_POST['description'] ?? '')
+];
+//              var_dump($_POST);
+// die();
 
-                        'phone' => trim($_POST['phone']),
-                        'major_id' => trim($_POST['major_id']),
-                        'description' => trim($_POST['description']),
-                        //'image' => $_FILES['image'] ?? null
-                    ];
-
+if ($data['major_id'] <= 0) {
+    $_SESSION['errors'][] = "Invalid Major ID";
+    header("Location: index.php?page=update-doctor&id=".$_POST['id']);
+    exit;
+}
 
                     $validator = new Validator();
-                     $userModel=new User($pdo);
-                    
-               
-                    
+       
 
                     $validator->required($data['name'], 'name');
                     $validator->required($data['email'], 'email');
-                    $validator->required($data['password'], 'password');
-
 
                     $errors = $validator->getErrors();
 
-                    if(!empty($errors)){
+                    if (!empty($errors)) {
 
                         $_SESSION['errors'] = $errors;
-
-                        header('Location:index.php?page=admin-doctor'. $id);
-                        exit;
-                    }$doctor = Doctor::findById($pdo, $id);
-                     $userModel->updateUser( $doctor->getUserId(), $data['name'], $data['email'],$data['password'],'doctor');
-                // $data['user_id'] = $userId;
-
-
-                    $doctorUpdated = Doctor::update($pdo, $id, $data['name'], $data['email'],
-                    $data['major_id'],$data['phone'], $data['description']);
-
-                    if($doctorUpdated){
-                        header('Location:index.php?page=admin-doctor');
+                        header('Location: index.php?page=update-doctor&id='.$id);
                         exit;
                     }
-                }
+                    $doctorUpdated = Doctor::update($pdo, $id, $data);
 
+if ($doctorUpdated) {
+    header("Location: index.php?page=admin-doctor");
+    exit;
+} else {
+    $_SESSION['errors'][] = "Update failed";
+    header("Location: index.php?page=update-doctor&id=".$id);
+    exit;
+}}
                 break;
 
 
