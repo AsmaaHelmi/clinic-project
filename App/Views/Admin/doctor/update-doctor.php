@@ -41,7 +41,7 @@ $majors=Major::getAll($pdo);
 
            <!-- Default box -->
            <div class="container-fluid">
-               <form action="index.php?page=store-doctor&action=update" method="POST">
+               <form action="index.php?page=store-doctor&action=update-doctor" method="POST" enctype="multipart/form-data">
                    <input type="hidden" name="id" value='<?= $row->getId(); ?>'>
 
                    <div class="card">
@@ -50,8 +50,7 @@ $majors=Major::getAll($pdo);
                                <div class="col-md-12">
                                    <div class="mb-3">
                                        <label for="name">Name</label>
-                                       <input type="text" name="name" id="name" class="form-control"
-                                           value="<?= $row->getName();
+                                       <input type="text" name="name" id="name" class="form-control" value="<?= $row->getName();
                                         //    var_dump($row);
                                         //    exit; ?>" placeholder="Name">
                                    </div>
@@ -92,7 +91,7 @@ $majors=Major::getAll($pdo);
                                            <?php foreach($majors as $major): ?>
 
                                            <option value="<?= $major->getId(); ?>"
-                                               <?= ($row->getMajorId()) ? 'selected' : ''; ?>>
+                                               <?= ($row->getMajorId() == $major->getId()) ? 'selected' : ''; ?>>
                                                <?= $major->getTitle(); ?>
                                            </option>
 
@@ -108,10 +107,10 @@ $majors=Major::getAll($pdo);
                                    <div class="mb-3">
                                        <label for="image" class="form-label">Image</label>
 
-                                    <img src="<?= $row->getImage(); ?>" width="100" class="mb-2">
+                                       <img src="<?= $row->getImage(); ?>" width="100" class="mb-2">
 
-<input type="file" name="image" class="form-control">
-                                      
+                                       <input type="file" name="image" class="form-control">
+
                                    </div>
 
                                </div>
@@ -120,8 +119,9 @@ $majors=Major::getAll($pdo);
                                <div class="col-md-12">
                                    <div class="mb-3">
                                        <label for="description">Description</label>
-                                       <textarea name="description" id="description" class="form-control" cols="30"
-                                           rows="5" value=""><?= $row->getDescription(); ?></textarea>
+                                       <textarea name="description" class="form-control" cols="30" rows="5">
+                                        <?= $row->getDescription(); ?>
+                                        </textarea>
                                    </div>
                                </div>
                            </div>
