@@ -3,6 +3,7 @@ use App\Models\Major;
 ob_start();
 require_once __DIR__ . "/vendor/autoload.php";
 session_start();
+define('BASE_URL', '/clinic_project/');
 
 $host   = "localhost";
 $dbName = "clinic_project";
