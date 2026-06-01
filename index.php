@@ -1,6 +1,6 @@
 <?php
 use App\Models\Major;
-
+ob_start();
 require_once __DIR__ . "/vendor/autoload.php";
 session_start();
 
@@ -167,3 +167,4 @@ if ($isAdmin) {
 } else {
     include 'App/Views/layouts/footer.php';
 }
+ob_end_flush();
