@@ -292,53 +292,41 @@ class Doctor
 
     // ===== UPDATE =====
 
-        case 'update-doctor':
+            public static function update(PDO $pdo, int $id, array $data): bool
+    {
+        try {
 
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $doctor = self::findById($pdo, $id);
 
-                    $id = (int) ($_POST['id'] ?? 0);
+            if (!$doctor) return false;
 
-                 $data = [
-    'name' => trim($_POST['name'] ?? ''),
-    'email' => trim($_POST['email'] ?? ''),
-    'phone' => trim($_POST['phone'] ?? ''),
-    'major_id' => (int)($_POST['major_id'] ?? 0),
-    'description' => trim($_POST['description'] ?? '')
-];
-//              var_dump($_POST);
-// die();
+            $userSql = "UPDATE users SET name = ?, email = ? WHERE id = ?";
 
-if ($data['major_id'] <= 0) {
-    $_SESSION['errors'][] = "Invalid Major ID";
-    header("Location: index.php?page=update-doctor&id=".$_POST['id']);
-    exit;
+            $userStmt = $pdo->prepare($userSql);
+
+            $userStmt->execute([
+                $data['name'],
+                $data['email'],
+                $doctor->getUserId()
+            ]);
+
+            $doctorSql = "UPDATE doctors
+                      SET major_id = ?, phone = ?, description = ?
+                      WHERE id = ?";
+
+            $doctorStmt = $pdo->prepare($doctorSql);
+
+            return $doctorStmt->execute([
+                $data['major_id'],
+                $data['phone'] ?? null,
+                $data['description'] ?? null,
+                $id
+            ]);
+        }catch (\Exception $e) {
+    die($e->getMessage());
+}
 }
 
-                    $validator = new Validator();
-       
-
-                    $validator->required($data['name'], 'name');
-                    $validator->required($data['email'], 'email');
-
-                    $errors = $validator->getErrors();
-
-                    if (!empty($errors)) {
-
-                        $_SESSION['errors'] = $errors;
-                        header('Location: index.php?page=update-doctor&id='.$id);
-                        exit;
-                    }
-                    $doctorUpdated = Doctor::update($pdo, $id, $data);
-
-if ($doctorUpdated) {
-    header("Location: index.php?page=admin-doctor");
-    exit;
-} else {
-    $_SESSION['errors'][] = "Update failed";
-    header("Location: index.php?page=update-doctor&id=".$id);
-    exit;
-}}
-                break;
 
     // ===== DELETE =====
 
