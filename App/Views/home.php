@@ -62,54 +62,70 @@
 </div>
             <h2 class="h1 fw-bold text-center my-4">doctors</h2>
 
-               <div class="d-flex flex-wrap gap-4 justify-content-center">
 
-                    <?php foreach ($doctors ?? [] as $doctor): ?>
+ <section class="splide home__slider__doctors mb-5">
 
-                            <div class="card p-2" style="width: 18rem;">
+        <div class="splide__track">
 
-                                <img
-                                    src="<?php echo $doctor->getImage(); ?>"
-                                    class="card-img-top rounded-circle card-image-circle"
-                                    alt="doctor"
+            <ul class="splide__list">
+
+                <?php foreach($doctors ?? [] as $doctor): ?>
+
+                    <li class="splide__slide">
+
+                        <div class="card p-2 mx-auto" style="width: 18rem;">
+
+                            <img
+                                src="<?= $doctor->getImage(); ?>"
+                                class="card-img-top rounded-circle card-image-circle"
+                                alt="doctor"
+                            >
+
+                            <div class="card-body d-flex flex-column gap-1 justify-content-center">
+
+                                <h4 class="card-title fw-bold text-center">
+
+                                    <?= $doctor->getName(); ?>
+
+                                </h4>
+
+                                <h6 class="card-title fw-bold text-center">
+
+                                    <?= $doctor->getMajorTitle(); ?>
+
+                                </h6>
+
+                                <p class="text-center">
+
+                                    <?= $doctor->getDescription(); ?>
+
+                                </p>
+
+                                <a
+                                    href="?page=book-appointment&id=<?= $doctor->getId(); ?>"
+                                    class="btn btn-outline-primary card-button"
                                 >
-
-                                <div class="card-body d-flex flex-column gap-1 justify-content-center">
-
-                                    <h4 class="card-title fw-bold text-center">
-
-                                        <?php echo $doctor->getName(); ?>
-
-                                    </h4>
-
-                                    <h6 class="card-title fw-bold text-center">
-
-                                        <?php echo $doctor->getMajorTitle(); ?>
-
-                                    </h6>
-
-                                    <p class="text-center">
-
-                                        <?php echo $doctor->getDescription(); ?>
-
-                                    </p>
-
-                                    <a
-                                        href="?page=book-appointment&id=<?php echo $doctor->getId(); ?>"
-                                        class="btn btn-outline-primary card-button"
-                                    >
-                                        Book an appointment
-                                    </a>
-
-                                </div>
+                                    Book an appointment
+                                </a>
 
                             </div>
 
+                        </div>
 
+                    </li>
 
-                    <?php endforeach; ?>
+                <?php endforeach; ?>
+
+            </ul>
 
         </div>
+
+    </section>
+
+
+
+
+
         <div class="banner container d-block d-lg-grid d-md-block d-sm-block">
             <div class="info">
                 <div class="info__details">
