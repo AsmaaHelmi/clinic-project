@@ -14,10 +14,9 @@ trait ManageFiles{
         }
         $fullpath=$folderpath. "/" . $file['name'];
         if(move_uploaded_file($file['tmp_name'],$fullpath)){
-              return $fullpath;
+               return self::$uploadDir . "/" . $uploadfolder . "/" . $file['name'];
         }
         return null;
 
     }
 }
-
