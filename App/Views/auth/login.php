@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <script>
                 window.location.href='index.php?page=home';
             </script>
-            ";
+            "; exit();
 
         } elseif ($user['role'] === 'admin') {
 
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 window.location.href='index.php?page=dashboard';
             </script>
             ";
-
+             exit();
         }
 
         exit();

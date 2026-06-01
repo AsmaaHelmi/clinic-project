@@ -8,8 +8,18 @@ $doctorId = $_GET['id'] ?? null;
 
 $doctor = Doctor::findById($pdo, $doctorId);
 
-?>
+if (!isset($_SESSION['user'])) {
 
+     echo "
+            <script>
+                window.location.href='index.php?page=login';
+            </script>
+            "; exit();
+
+
+}
+
+?>
 <div class="container">
 
     <nav
