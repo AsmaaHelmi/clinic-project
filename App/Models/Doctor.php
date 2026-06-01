@@ -292,49 +292,40 @@ class Doctor
 
     // ===== UPDATE =====
 
-    public static function update(
+     public static function update(PDO $pdo, int $id, array $data): bool
+    {
+        try {
 
-        PDO $pdo,
-        int $id,
+            $doctor = self::findById($pdo, $id);
 
-        int $major_id,
-        string $phone,
+            if (!$doctor) return false;
 
-        string $description,
-        string $image = ''
+            $userSql = "UPDATE users SET name = ?, email = ? WHERE id = ?";
 
-    ): bool {
+            $userStmt = $pdo->prepare($userSql);
 
-        $sql = "
+            $userStmt->execute([
+                $data['name'],
+                $data['email'],
+                $doctor->getUserId()
+            ]);
 
-        UPDATE doctors
+            $doctorSql = "UPDATE doctors
+                      SET major_id = ?, phone = ?, description = ?
+                      WHERE id = ?";
 
-        SET
+            $doctorStmt = $pdo->prepare($doctorSql);
 
-            major_id = ?,
-            phone = ?,
-            image = ?,
-            description = ?
-
-        WHERE id = ?
-
-        ";
-
-        $stmt = $pdo->prepare($sql);
-
-        return $stmt->execute([
-
-            $major_id,
-
-            $phone,
-            $image,
-
-            $description,
-
-            $id,
-
-        ]);
-    }
+            return $doctorStmt->execute([
+                $data['major_id'],
+                $data['phone'] ?? null,
+                $data['description'] ?? null,
+                $id
+            ]);
+        }catch (\Exception $e) {
+    die($e->getMessage());
+}
+}
 
     // ===== DELETE =====
 
