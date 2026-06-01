@@ -1,30 +1,24 @@
 <?php
 use App\Models\Major;
 
-
-
 require_once __DIR__ . "/vendor/autoload.php";
 session_start();
 
-$host = "localhost";
+$host   = "localhost";
 $dbName = "clinic_project";
-$user = "root";
-$pass = "";
-try{
-$pdo = new PDO("mysql:host=$host;dbname=$dbName", $user, $pass);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);}
-catch(PDOException $e){
-    die("database connection failed".$e->getMessage());
+$user   = "root";
+$pass   = "";
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbName", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("database connection failed" . $e->getMessage());
 }
 
+$page       = $_GET['page'] ?? "home";
+$isAdmin    = false;
+$adminpages = [
 
-
-
-
-$page=$_GET['page']??"home";
-$isAdmin=false;
-$adminpages=[
-    
     'dashboard',
     'admin-major',
     'create-major',
@@ -39,92 +33,96 @@ $adminpages=[
     'admin-logout',
     'admin-doctors',
 
-
-
 ];
 if (in_array($page, $adminpages)) {
     $isAdmin = true;
 }
-if($isAdmin){
+
+if ($page === 'logout') {
+
+    session_unset();
+
+    session_destroy();
+
+    header("Location: index.php?page=login");
+
+    exit();
+
+}
+
+if ($isAdmin) {
     include "App/Views/Admin/layouts/header.php";
     include "App/Views/Admin/layouts/nav.php";
     include "App/Views/Admin/layouts/sidebar.php";
 
     echo "<div class='admin-wrapper'>";
-}
-else{
+} else {
     include 'App/Views/layouts/header.php';
     include 'App/Views/layouts/nav.php';
 
-   
 }
 
-switch($page){
-     case "home":
+switch ($page) {
+    case "home":
         require "App/Views/home.php";
         break;
-        case "major":
+    case "major":
         require "App/Views/major.php";
         break;
-        case "dashboard":
+    case "dashboard":
         require "App/Views/Admin/dashboard.php";
         break;
-        case "admin-major":
-            require "App/Views/Admin/major/admin-major.php";
-            break;
-   
- 
+    case "admin-major":
+        require "App/Views/Admin/major/admin-major.php";
+        break;
+
     case "create-major":
         require "App/Views/Admin/major/create-major.php";
         break;
-     case "store-major":
+    case "store-major":
         require 'App/controllers/majorController.php';
         break;
-        case "update-major":
-      
+    case "update-major":
+
         require "App/Views/Admin/major/update-major.php";
         break;
-       
-         case "delete-major":
-      
-                require 'App/controllers/majorController.php';
 
-         break;
-            case "login":
-        require "app/views/auth/login.php";
+    case "delete-major":
+
+        require 'App/controllers/majorController.php';
+
+        break;
+    case "login":
+        require "App/Views/auth/login.php";
         break;
     case "register":
-        require "app/views/auth/register.php";
+        require "App/Views/auth/register.php";
         break;
-    case "logout":
-        require "app/views/auth/logout.php";
+
+    case "admin-doctor":
+        require "App/Views/Admin/doctor/admin-doctor.php";
         break;
-   
-    
-       case "admin-doctor":
-            require "App/Views/Admin/doctor/admin-doctor.php";
-            break;
-   
-  case "doctors":
+
+    case "doctors":
         require "App/Views/doctor.php";
         break;
     case "create-doctor":
         require "App/Views/Admin/doctor/create-doctor.php";
         break;
-     case "store-doctor":
+    case "store-doctor":
         require 'App/controllers/doctorController.php';
         break;
-        case "update-doctor":
-      
+    case "update-doctor":
+
         require "App/Views/Admin/doctor/update-doctor.php";
         break;
-       
-         case "delete-doctor":
-      
-                require 'App/Controllers/doctorController.php';
 
-         break;
-          case "admin-patients":
+    case "delete-doctor":
+
+        require 'App/Controllers/doctorController.php';
+
+        break;
+    case "admin-patients":
         require "App/Views/Admin/users.php";
         break;
     case "admin-doctors":
@@ -137,13 +135,11 @@ switch($page){
         require "App/Views/Admin/logout.php";
         break;
 
-   
     case "patient-dashboard":
         require "App/Views/patient/patient-dashboard.php";
         break;
-   
-  
-          case 'book-appointment':
+
+    case 'book-appointment':
         require 'App/Views/patient/book-appointment.php';
         break;
     case 'appointment-controller':
@@ -157,37 +153,17 @@ switch($page){
         require 'App/Controllers/CancelAppointmentController.php';
         break;
 
-    case "login":
-        require "App/Views/Auth/login.php";
+    case "major-doctors":
+
+        require"App/Views/major-doctors.php";
+
         break;
-    case "register":
-        require "App/Views/Auth/register.php";
-        break;
-    case "logout":
-        require "App/Views/Auth/logout.php";
-        break;
+
 }
 
-if($isAdmin){
+if ($isAdmin) {
     include "App/Views/Admin/layouts/footer.php";
 
-}else{
-include 'App/Views/layouts/footer.php';}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-?>
+} else {
+    include 'App/Views/layouts/footer.php';
+}

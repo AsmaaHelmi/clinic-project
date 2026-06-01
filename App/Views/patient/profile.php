@@ -1,46 +1,143 @@
 <?php
-use App\Models\Patient;
-if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'patient') {
-    header("Location: index.php?page=login");
-    exit();
-}
-$patientModel = new Patient(); $message = "";
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['name']);
-    if (!empty($name)) {
-        if ($patientModel->updateProfile($_SESSION['user_id'], $name)) {
-            $_SESSION['user_name'] = $name;
-            $message = "Profile updated successfully.";
-        } else {
-            $message = "An error occurred during update.";
-        }
-    }
-}
-$profile = $patientModel->getProfile($_SESSION['user_id']);
+
+use App\core\Helper;
+use App\Models\Appointment;
+
+
+$user = $_SESSION['user'];
+
+$appointments = Appointment::getPatientAppointments(
+    $pdo,
+    $user['id']
+);
+
 ?>
-<div class="container">
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="fw-bold my-4 h4">
-        <ol class="breadcrumb justify-content-center">
-            <li class="breadcrumb-item"><a class="text-decoration-none" href="index.php?page=patient-dashboard">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Profile</li>
-        </ol>
-    </nav>
-    <div class="d-flex flex-column gap-3 account-form mx-auto mt-5" style="max-width: 500px;">
-        <form class="form" method="POST" action="index.php?page=patient-profile">
-            <div class="form-items">
-                <?php if(!empty($message)): ?>
-                    <div class="alert alert-success py-2"><?php echo $message; ?></div>
-                <?php endif; ?>
-                <div class="mb-3">
-                    <label class="form-label" for="name">Full Name</label>
-                    <input type="text" name="name" class="form-control" id="name" value="<?php echo htmlspecialchars($profile['name']); ?>" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="email">Email (Cannot be changed)</label>
-                    <input type="email" class="form-control" id="email" value="<?php echo htmlspecialchars($profile['email']); ?>" disabled>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Save Changes</button>
-        </form>
+
+<div class="container my-5">
+
+    <h1 class=" mb-5">
+        My Profile
+    </h1>
+
+    <!-- PROFILE CARD -->
+
+    <div class="card p-4  mb-5" style="max-width: 600px;">
+
+        <div class="mb-3">
+
+            <label class="form-label fw-bold">
+                Name
+            </label>
+
+            <input
+                type="text"
+                class="form-control"
+                value="<?= $user['name']; ?>"
+                disabled
+            >
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label fw-bold">
+                Email
+            </label>
+
+            <input
+                type="email"
+                class="form-control"
+                value="<?= $user['email']; ?>"
+                disabled
+            >
+
+        </div>
+
     </div>
+
+    <!-- APPOINTMENTS -->
+
+    <h2 class=" mb-4">
+        My Appointments
+    </h2>
+    <?php Helper::showMessage(); ?>
+    <?php if(empty($appointments)): ?>
+
+        <div class="alert alert-info text-center">
+
+            No appointments found.
+
+        </div>
+
+    <?php else: ?>
+
+        <div class="d-flex flex-column gap-4">
+
+            <?php foreach($appointments as $appointment): ?>
+
+                
+
+                    <div class="card p-3 h-100" style="max-width: 700px;">
+
+                        <h4 class="mb-3">
+
+                            Dr.
+                            <?= $appointment['doctor_name']; ?>
+
+                        </h4>
+
+                        <p>
+
+                            <strong>Major:</strong>
+
+                            <?= $appointment['major_title']; ?>
+
+                        </p>
+
+                        <p>
+
+                            <strong>Date:</strong>
+
+                            <?= $appointment['appointment_date']; ?>
+
+                        </p>
+
+                        <p>
+
+                            <strong>Time:</strong>
+
+                            <?= $appointment['appointment_time']; ?>
+
+                        </p>
+
+                        <p>
+
+                            <strong>Status:</strong>
+
+                            <?= $appointment['status']; ?>
+
+                        </p>
+
+                      <?php if($appointment['status'] === 'pending'): ?>
+
+                       <a
+                            href="index.php?page=cancel-appointment&id=<?= $appointment['id']; ?>"
+                            class="btn btn-danger mt-3 w-auto px-4 align-self-start"
+                        >
+                            Cancel Appointment
+                        </a>
+
+                    <?php endif; ?>
+
+                    </div>
+
+                
+
+            <?php endforeach; ?>
+
+        </div>
+
+    <?php endif; ?>
+
 </div>
+
