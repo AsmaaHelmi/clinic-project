@@ -3,7 +3,7 @@ use App\Models\Major;
 ob_start();
 require_once __DIR__ . "/vendor/autoload.php";
 session_start();
-define('BASE_URL', '/clinic_project/');
+define('BASE_URL', '/clinic-project/');
 
 $host   = "localhost";
 $dbName = "clinic_project";
@@ -103,6 +103,20 @@ switch ($page) {
     case "admin-doctor":
         require "App/Views/Admin/doctor/admin-doctor.php";
         break;
+ 
+case "admin-logout":
+
+    session_unset();
+
+    session_destroy();
+
+    header("Location: index.php?page=home");
+
+    exit();
+
+    break;
+
+
 
     case "doctors":
         require "App/Views/doctor.php";
