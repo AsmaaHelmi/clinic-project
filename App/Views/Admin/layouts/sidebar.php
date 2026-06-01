@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 			<aside class="main-sidebar sidebar-dark-primary elevation-4">
 				<a href="#" class="brand-link">
-					<img src="/clinic_project/App/Views/Admin/assets/img/AdminLTELogo.png" alt="Clinic Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+					<img src="<?= BASE_URL ?>"/App/Views/Admin/assets/img/AdminLTELogo.png" alt="Clinic Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
 					<span class="brand-text font-weight-light">Clinic Dashboard</span>
 				</a>
 				<div class="sidebar">
