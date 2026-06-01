@@ -33,6 +33,7 @@ $adminpages = [
     'admin-login',
     'admin-logout',
     'admin-doctors',
+    'admin-appointments',
 
 ];
 if (in_array($page, $adminpages)) {
@@ -103,20 +104,24 @@ switch ($page) {
     case "admin-doctor":
         require "App/Views/Admin/doctor/admin-doctor.php";
         break;
- 
-case "admin-logout":
 
-    session_unset();
+    case "admin-logout":
 
-    session_destroy();
+        session_unset();
 
-    header("Location: index.php?page=home");
+        session_destroy();
 
-    exit();
+        header("Location: index.php?page=home");
 
-    break;
+        exit();
 
+        break;
 
+    case "admin-appointments":
+
+        require "App/Views/Admin/appointments/admin-appointments.php";
+
+        break;
 
     case "doctors":
         require "App/Views/doctor.php";
@@ -146,10 +151,6 @@ case "admin-logout":
     case "admin-login":
         require "App/Views/Admin/login.php";
         break;
-    case "admin-logout":
-        require "App/Views/Admin/logout.php";
-        break;
-
     case "patient-dashboard":
         require "App/Views/patient/patient-dashboard.php";
         break;
@@ -170,7 +171,7 @@ case "admin-logout":
 
     case "major-doctors":
 
-        require"App/Views/major-doctors.php";
+        require "App/Views/major-doctors.php";
 
         break;
 

@@ -5,7 +5,7 @@
     <a href="#" class="brand-link">
 
         <img
-            src="<?= BASE_URL ?>App/Views/Admin/assets/img/AdminLTELogo.png"
+            src="<?php echo BASE_URL ?>App/Views/Admin/assets/img/AdminLTELogo.png"
             alt="Clinic Logo"
             class="brand-image img-circle elevation-3"
             style="opacity: .8"
@@ -53,6 +53,19 @@
                     </a>
 
                 </li>
+
+<li class="nav-item">
+
+    <a href="index.php?page=admin-appointments" class="nav-link">
+
+        <i class="nav-icon fas fa-calendar-check"></i>
+
+        <p>Appointments</p>
+
+    </a>
+
+</li>
+
 
                 <li class="nav-item">
 
