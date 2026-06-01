@@ -3,7 +3,7 @@ use App\Models\Major;
 ob_start();
 require_once __DIR__ . "/vendor/autoload.php";
 session_start();
-define('BASE_URL', '/clinic_project/');
+define('BASE_URL', '/clinic-project/');
 
 $host   = "localhost";
 $dbName = "clinic_project";
@@ -33,6 +33,7 @@ $adminpages = [
     'admin-login',
     'admin-logout',
     'admin-doctors',
+    'admin-appointments',
 
 ];
 if (in_array($page, $adminpages)) {
@@ -104,6 +105,24 @@ switch ($page) {
         require "App/Views/Admin/doctor/admin-doctor.php";
         break;
 
+    case "admin-logout":
+
+        session_unset();
+
+        session_destroy();
+
+        header("Location: index.php?page=home");
+
+        exit();
+
+        break;
+
+    case "admin-appointments":
+
+        require "App/Views/Admin/appointments/admin-appointments.php";
+
+        break;
+
     case "doctors":
         require "App/Views/doctor.php";
         break;
@@ -132,10 +151,6 @@ switch ($page) {
     case "admin-login":
         require "App/Views/Admin/login.php";
         break;
-    case "admin-logout":
-        require "App/Views/Admin/logout.php";
-        break;
-
     case "patient-dashboard":
         require "App/Views/patient/patient-dashboard.php";
         break;
@@ -156,7 +171,7 @@ switch ($page) {
 
     case "major-doctors":
 
-        require"App/Views/major-doctors.php";
+        require "App/Views/major-doctors.php";
 
         break;
 
