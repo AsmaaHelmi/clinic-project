@@ -75,7 +75,7 @@
                         <div class="card p-2 mx-auto" style="width: 18rem;">
 
                             <img
-                                src="<?= $doctor->getImage(); ?>"
+                                src="<?=   $doctor->getImage(); ?>"
                                 class="card-img-top rounded-circle card-image-circle"
                                 alt="doctor"
                             >
