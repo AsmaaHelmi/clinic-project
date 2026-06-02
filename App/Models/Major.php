@@ -1,5 +1,7 @@
 <?php
 namespace App\Models;
+use App\traits\ManageFiles;
+
 use PDO;
 
 class Major {
@@ -7,8 +9,10 @@ class Major {
     public int $id;
     public string $title;
     public string $description;
+    public ?string $image;
 
-    public function __construct($id,$title, $description){
+
+    public function __construct($id,$title, $description,$image=null){
       
         $this->id=$id;
         $this->title=$title;
@@ -24,21 +28,37 @@ class Major {
      public function getDescription(){
         return $this->description;
     } 
+      public function getImage(){
+        return $this->image;
+    } 
     //-----------
     
 
      
 
-    public  static function create(PDO $pdo,string $title,string $description){
+    public  static function create(PDO $pdo,string $title,string $description,?array $image=null){
+         $imageName = '';
 
-        $sql="INSERT INTO `majors` (title,description) VALUES(?,?)";
+       
+
+        if ($image && is_array($image)) {
+
+            $imageName = ManageFiles::uploadImage(
+                $image,
+                "majors"
+            );
+             
+        }
+
+
+        $sql="INSERT INTO `majors` (title,description,image) VALUES(?,?,?)";
         $statm=$pdo->prepare($sql);
-        $success=$statm->execute([$title,$description]);
+        $success=$statm->execute([$title,$description,$imageName]);
      
 
         if($success){
             $id=$pdo->lastInsertId();
-            return  new self($id, $title,$description);
+            return  new self($id, $title,$description,$imageName);
 
         }
       
@@ -50,7 +70,7 @@ class Major {
         $rows=$sql->fetchAll(PDO::FETCH_ASSOC);
         $majors=[];
         foreach($rows as $major){
-            $majors[]=new self($major['id'],$major['title'],$major['description']);
+            $majors[]=new self($major['id'],$major['title'],$major['description'],$major['image']);
         }
         return $majors;
     }
@@ -60,7 +80,7 @@ class Major {
        $statm->execute([$id]);
        $row=$statm->fetch(PDO::FETCH_ASSOC);
        if($statm){
-        return new self($row['id'],$row['title'],$row['description']);
+        return new self($row['id'],$row['title'],$row['description'],$row['image']);
 
        }
 
