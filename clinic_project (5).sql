@@ -65,7 +65,7 @@ CREATE TABLE `doctors` (
 --
 
 INSERT INTO `doctors` (`id`, `user_id`, `major_id`, `phone`, `image`, `description`) VALUES
-(22, 58, 29, '+1 (604) 391-7121', 'C:\\xampp\\htdocs\\clinic_project\\App/public/assets/imagesdoctors/Screenshot (3).png', 'Numquam est doloremq'),
+(22, 58, 29, '+1 (604) 391-7121', NULL, 'Numquam est doloremq'),
 (23, 59, 27, '+1 (431) 966-9519', NULL, 'Saepe velit anim te'),
 (24, 61, 27, '+1 (403) 467-9334', NULL, 'Necessitatibus dolor'),
 (26, 63, 28, '+1 (573) 515-9924', NULL, 'Officiis ullamco sit'),
