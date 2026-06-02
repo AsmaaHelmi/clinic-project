@@ -34,6 +34,7 @@ $adminpages = [
     'admin-logout',
     'admin-doctors',
     'admin-appointments',
+    "doctor-dashboard",
 
 ];
 if (in_array($page, $adminpages)) {
@@ -174,6 +175,10 @@ switch ($page) {
         require "App/Views/major-doctors.php";
 
         break;
+      case "doctor-dashboard":
+            require 'App/Views/Admin/doctor-dashboard.php';
+            break;
+
 
 }
 
