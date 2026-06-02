@@ -17,6 +17,8 @@ class Major {
         $this->id=$id;
         $this->title=$title;
         $this->description=$description;
+        $this->image=$image;
+        
 
     }
     public function getId(){
