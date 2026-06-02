@@ -79,7 +79,7 @@ $doctors=Doctor::getAll($pdo);
                                 <td><?= $doctor->getUserId(); ?></td>
                                 <td><?= $doctor->getName(); ?></td>
                                 <td><?= $doctor->getEmail(); ?></td>
-                                <td><?= $doctor->getMajorId(); ?></td>
+                                <td><?= $doctor->getMajorTitle(); ?></td>
 
                                 
 
