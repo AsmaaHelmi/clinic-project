@@ -3,7 +3,8 @@ namespace App\traits;
 trait ManageFiles{
     public static $uploadDir="public/assets/images";
     public static function uploadImage(array $file, ?string $uploadfolder=null){
-        $realpath=realpath(__DIR__."/../../").self::$uploadDir;
+        $realpath = realpath(__DIR__ . "/../../")
+            . "/" . self::$uploadDir;
 
     
         if(isset($uploadfolder)){
