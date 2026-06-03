@@ -1,12 +1,11 @@
 <?php
+use App\Models\Appointment;
 use App\Models\Major;
 ob_start();
 require_once __DIR__ . "/vendor/autoload.php";
 session_start();
 define('BASE_URL', '/clinic-project/');
 //define('BASE_URL', '/clinic-project-main/');
-
-
 
 $host   = "localhost";
 $dbName = "clinic_project";
@@ -178,10 +177,21 @@ switch ($page) {
         require "App/Views/major-doctors.php";
 
         break;
-      case "doctor-dashboard":
-            require 'App/Views/doctor-dashboard.php';
-            break;
+    case "doctor-dashboard":
+        $doctorId = $_SESSION['user']['id'];
+        $sql      = "SELECT id FROM doctors WHERE user_id = ?";
+        $stmt     = $pdo->prepare($sql);
+        $stmt->execute([$doctorId]);
 
+        $doctor = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $appointments = [];
+
+        if ($doctor) {
+            $appointments = Appointment::getDoctorAppointments($pdo, $doctor['id']);
+        }
+        require 'App/Views/doctor-dashboard.php';
+        break;
 
 }
 
