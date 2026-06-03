@@ -31,7 +31,7 @@ $majors = Major::getAll($pdo); ?>
                         <h4 class="card-title fw-bold text-center"><?php echo $major->getTitle();?></h4>
                         <p class="card-title fw-bold text-center"><?php echo $major->getDescription();?></p>
 
-                        <a href="index.php?page=doctors" class="btn btn-outline-primary card-button">Browse Doctors</a>
+                        <a href="index.php?page=major-doctors&id=<?php echo $major->getId(); ?>" class="btn btn-outline-primary card-button">Browse Doctors</a>
                     </div>
                 </div>
                 <?php endforeach; ?>
