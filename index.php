@@ -179,7 +179,7 @@ switch ($page) {
 
         break;
       case "doctor-dashboard":
-            require 'App/Views/Admin/doctor-dashboard.php';
+            require 'App/Views/doctor-dashboard.php';
             break;
 
 
