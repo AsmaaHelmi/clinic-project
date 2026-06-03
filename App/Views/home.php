@@ -39,8 +39,14 @@
                 foreach ($majors ?? [] as $major):
             ?>
             <div class="card p-2" style="width: 18rem;">
-                <img src="public/assets/images/major.jpg" class="card-img-top rounded-circle card-image-circle"
-                    alt="major">
+
+<img
+    src="<?php echo $major->getImage() ?: 'public/assets/images/major.jpg'; ?>"
+    class="card-img-top rounded-circle card-image-circle"
+    alt="major"
+>
+
+
                 <div class="card-body d-flex flex-column gap-1 justify-content-center">
                     <h4 class="card-title fw-bold text-center"><?php echo $major->getTitle(); ?></h4>
                     <p class="card-title fw-bold text-center"><?php echo $major->getDescription(); ?></p>
@@ -68,14 +74,14 @@
 
             <ul class="splide__list">
 
-                <?php foreach($doctors ?? [] as $doctor): ?>
+                <?php foreach ($doctors ?? [] as $doctor): ?>
 
                     <li class="splide__slide">
 
                         <div class="card p-2 mx-auto" style="width: 18rem;">
 
                             <img
-                                src="<?=   $doctor->getImage(); ?>"
+                                src="<?php echo $doctor->getImage(); ?>"
                                 class="card-img-top rounded-circle card-image-circle"
                                 alt="doctor"
                             >
@@ -84,24 +90,24 @@
 
                                 <h4 class="card-title fw-bold text-center">
 
-                                    <?= $doctor->getName(); ?>
+                                    <?php echo $doctor->getName(); ?>
 
                                 </h4>
 
                                 <h6 class="card-title fw-bold text-center">
 
-                                    <?= $doctor->getMajorTitle(); ?>
+                                    <?php echo $doctor->getMajorTitle(); ?>
 
                                 </h6>
 
                                 <p class="text-center">
 
-                                    <?= $doctor->getDescription(); ?>
+                                    <?php echo $doctor->getDescription(); ?>
 
                                 </p>
 
                                 <a
-                                    href="?page=book-appointment&id=<?= $doctor->getId(); ?>"
+                                    href="?page=book-appointment&id=<?php echo $doctor->getId(); ?>"
                                     class="btn btn-outline-primary card-button"
                                 >
                                     Book an appointment

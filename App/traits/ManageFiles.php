@@ -1,31 +1,27 @@
 <?php
 namespace App\traits;
 
-trait ManageFiles{
-
+trait ManageFiles
+{
+    public static $uploadDir = "public/assets/images/";
     public static function uploadImage(array $file, ?string $uploadfolder = null)
     {
-        $folderpath = __DIR__ . "/../../public/assets/images";
-
-        if ($uploadfolder) {
-            $folderpath .= "/" . $uploadfolder;
+        $realpath = realpath(__DIR__ . "../../..") . "/" . self::$uploadDir;
+        if (isset($uploadfolder)) {
+            $folderpath = $realpath . $uploadfolder;
+        } else {
+            $folderpath = $realpath;
         }
-
-        if (!is_dir($folderpath)) {
-            mkdir($folderpath, 0777, true);
+        if (! is_dir($folderpath)) {
+            mkdir($folderpath, 0775, true);
         }
-
-        $imageName = time() . "_" . $file['name'];
-
-        $fullpath = $folderpath . "/" . $imageName;
-
+        $fullpath = $folderpath . "/" . $file['name'];
         if (move_uploaded_file($file['tmp_name'], $fullpath)) {
 
-            return "public/assets/images/"
-                . ($uploadfolder ? $uploadfolder . "/" : "")
-                . $imageName;
-        }
+            return self::$uploadDir . $uploadfolder . "/" . $file['name'];
 
+        }
         return null;
+
     }
 }
