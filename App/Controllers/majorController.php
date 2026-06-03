@@ -13,7 +13,9 @@ public static function handel($pdo){
 if($_SERVER['REQUEST_METHOD'] === "POST"){
    // var_dump($_POST);
     $title=trim($_POST['title']); 
-    $description=trim($_POST['description']);    
+    $description=trim($_POST['description']);
+    $image = $_FILES['image'];
+    
 
     $newvalidator=new Validator();
     $newvalidator->required( $title,"title");
@@ -22,7 +24,9 @@ if(!empty($errors)){
     $_SESSION['errors'] = $errors;
     header("Location:index.php?page=create-major");
     exit;}
-     $newMajor = Major::create($pdo, $title,$description);
+//     var_dump($_FILES);
+// die();
+     $newMajor = Major::create($pdo, $title,$description,$image);
     if($newMajor){
         header("Location:index.php?page=admin-major");
         exit;

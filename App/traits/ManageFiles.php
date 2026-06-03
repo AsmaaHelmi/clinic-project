@@ -9,12 +9,14 @@ trait ManageFiles{
         }else{
             $folderpath=$realpath;
         }
-        if(!is_dir($folderpath)){
-            mkdir($folderpath,0775,true);
+        if (! is_dir($folderpath)) {
+            mkdir($folderpath, 0775, true);
         }
-        $fullpath=$folderpath. "/" . $file['name'];
-        if(move_uploaded_file($file['tmp_name'],$fullpath)){
-               return self::$uploadDir . "/" . $uploadfolder . "/" . $file['name'];
+        $fullpath = $folderpath . "/" . $file['name'];
+        if (move_uploaded_file($file['tmp_name'], $fullpath)) {
+
+            return self::$uploadDir . $uploadfolder . "/" . $file['name'];
+
         }
         return null;
 

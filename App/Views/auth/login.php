@@ -48,6 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ";
              exit();
         }
+elseif ($user['role'] === 'doctor') {
+
+            echo "
+            <script>
+                window.location.href='index.php?page=doctor-dashboard';
+            </script>
+            ";
+             exit();
+        }
 
         exit();
 
