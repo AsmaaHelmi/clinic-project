@@ -44,15 +44,43 @@ class Helper
     }
 
 
-
-
-
-
-
     public static function redirect($page)
     {
         header("Location: {$page}");
         exit;
     }
 
+    //================================
+
+
+    public static function requireLogin()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?page=login");
+            exit();
+        }
+    }
+
+    public static function requireRole($role)
+    {
+        if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== $role) {
+            die("403 Unauthorized");
+        }
+    }
+
+    public static function isAdmin()
+    {
+        return ($_SESSION['user_role'] ?? null) === 'admin';
+    }
+
+    public static function isDoctor()
+    {
+        return ($_SESSION['user_role'] ?? null) === 'doctor';
+    }
+
+    public static function doctorId()
+    {
+        return $_SESSION['doctor_id'] ?? null;
+    }
 }
+

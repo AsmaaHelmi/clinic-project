@@ -1,9 +1,17 @@
 <?php
+
+
 use App\Models\Major;
+use App\Models\Appointment;
+use App\Models\Doctor;
+use App\Models\Patient;
+use App\Core\Helper;
+
+
 ob_start();
 require_once __DIR__ . "/vendor/autoload.php";
 session_start();
-define('BASE_URL', '/clinic_project/');
+define('BASE_URL', '/');
 
 $host   = "localhost";
 $dbName = "clinic_project";
@@ -35,6 +43,20 @@ $adminpages = [
     'admin-doctors',
 
 ];
+
+//===============================
+$doctorPages = [
+    'doctor-dashboard'
+];
+
+$isDoctor = false;
+
+if (in_array($page, $doctorPages)) {
+    $isDoctor = true;
+}
+
+//================================
+
 if (in_array($page, $adminpages)) {
     $isAdmin = true;
 }
@@ -57,6 +79,12 @@ if ($isAdmin) {
     include "App/Views/Admin/layouts/sidebar.php";
 
     echo "<div class='admin-wrapper'>";
+} elseif ($isDoctor) {
+    include "App/Views/Admin/layouts/header.php";
+    include "App/Views/Admin/layouts/nav.php";
+    include "App/Views/Admin/layouts/sidebar.php";
+
+    echo "<div class='admin-wrapper'>";
 } else {
     include 'App/Views/layouts/header.php';
     include 'App/Views/layouts/nav.php';
@@ -70,9 +98,12 @@ switch ($page) {
     case "major":
         require "App/Views/major.php";
         break;
+
     case "dashboard":
+
         require "App/Views/Admin/dashboard.php";
         break;
+
     case "admin-major":
         require "App/Views/Admin/major/admin-major.php";
         break;
@@ -160,12 +191,42 @@ switch ($page) {
 
         break;
 
+    // ======================================
+
+    case "doctor-dashboard":
+
+    Helper::requireLogin();
+    Helper::requireRole('doctor');
+
+    $doctorId = Helper::doctorId();
+
+    $appointments = Appointment::getDoctorAppointments($pdo, $doctorId);
+        if (!isset($_SESSION['doctor_id'])) {
+        die("doctor_id is missing in session");
+    }
+
+    $doctorId = (int) $_SESSION['doctor_id'];
+
+    $appointments = \App\Models\Appointment::getDoctorAppointments($pdo, $doctorId);
+
+    require "App/Views/doctor-dashboard.php";
+    break;
+
+    // ==========================================
+
+    case "login-action":
+    require "App/Controllers/AuthController.php";
+    break;
+
 }
 
 if ($isAdmin) {
     include "App/Views/Admin/layouts/footer.php";
 
-} else {
+} elseif ($isDoctor) {
+        include "App/Views/Admin/layouts/footer.php";
+}
+ else {
     include 'App/Views/layouts/footer.php';
 }
 ob_end_flush();

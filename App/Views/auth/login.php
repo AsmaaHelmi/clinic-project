@@ -22,14 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user && password_verify($password, $user['password'])) {
 
-        $_SESSION['user'] = [
+        // $_SESSION['user'] = [
 
-            'id' => $user['id'],
-            'name' => $user['name'],
-            'email' => $user['email'],
-            'role' => $user['role']
+        //     'id' => $user['id'],
+        //     'name' => $user['name'],
+        //     'email' => $user['email'],
+        //     'role' => $user['role']
 
-        ];
+        // ];
 
         if ($user['role'] === 'patient') {
 
@@ -47,7 +47,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </script>
             ";
              exit();
-        }
+        } elseif ($user['role'] === 'doctor') {
+
+    $doctor = $userModel->getDoctorIdByUserId($user['id']);
+
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['user_role'] = 'doctor';
+    $_SESSION['doctor_id'] = $doctor['id'];
+
+    header("Location: index.php?page=doctor-dashboard");
+    exit();
+}
+
 
         exit();
 
@@ -96,11 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         style="max-width: 500px;"
     >
 
-        <form
-            class="form"
-            method="POST"
-            action="index.php?page=login"
-        >
+        <form method="POST" action="index.php?page=login-action">
 
             <div class="form-items">
 

@@ -7,7 +7,7 @@
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="fw-bold my-4 h4">
                 <ol class="breadcrumb justify-content-center">
                     <li class="breadcrumb-item"><a class="text-decoration-none" href="index.php?page=home">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">doctors</li>
+                    <li class="breadcrumb-item active" aria-current="page">Doctors</li>
                 </ol>
             </nav>
             <div class="doctors-grid">
@@ -15,7 +15,7 @@
                 <div class="card p-2" style="width: 18rem;">
 
                         <img
-                            src="<?php echo $doctor->getImage(); ?>"
+                            src="public/assets/images/major.jpg"
                             class="card-img-top rounded-circle card-image-circle"
                             alt="doctor"
                         >

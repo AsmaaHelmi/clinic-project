@@ -49,20 +49,12 @@ $doctors=Doctor::getAll($pdo);
                         <thead>
                             <tr>
                                 <th width="60">ID</th>
-                                <th>user_id</th>
-                                    <th>Doctor name</th>
-                                <th>email</th>
-                                <th>major_title</th>
-
-                            
-                                
+                                <th>User ID</th>
+                                <th>Doctor Name</th>
+                                <th>Email</th>
+                                <th>Major Title</th>    
                                 <th>Phone</th>
-
-
                                 <th>Description</th>
-
-
-
                                 <th width="60">Action</th>
                             </tr>
                         </thead>
@@ -79,17 +71,10 @@ $doctors=Doctor::getAll($pdo);
                                 <td><?= $doctor->getUserId(); ?></td>
                                 <td><?= $doctor->getName(); ?></td>
                                 <td><?= $doctor->getEmail(); ?></td>
-                                <td><?= $doctor->getMajorId(); ?></td>
-
-                                
-
+                                <td><?= $doctor->getMajorTitle(); ?></td>
                                 <td><?= $doctor->getPhone(); ?></td>
                                 <td><?= $doctor->getDescription(); ?></td>
-
-
-
-
-
+                                
                                 <td>
                                     <a href="index.php?page=update-doctor&id=<?php echo $doctor->getId();?>">
                                         <svg class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"

@@ -4,6 +4,9 @@ namespace App\Controllers;
 use App\Core\Helper;
 use App\Models\Appointment;
 use App\Core\Validator;
+
+
+
 $validator = new Validator();
 
 if (Helper::checkRequestMethod()) {
@@ -72,4 +75,12 @@ if (Helper::checkRequestMethod()) {
     Helper::redirect('?page=book-appointment&id=' . $doctorId);;
     exit;
 
+    $doctorId = $_SESSION['doctor_id'];
+
+$appointments = Appointment::getDoctorAppointments(
+    $pdo,
+    $doctorId
+);
+
+require_once APP_PATH . '../Views/Admin/doctor-dashboard.php';
 }

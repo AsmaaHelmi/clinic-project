@@ -1,6 +1,9 @@
 <?php
 use App\Models\Major;
 use App\Core\Validator;
+use App\Core\Helper;
+
+
 class MajorController{
    
 

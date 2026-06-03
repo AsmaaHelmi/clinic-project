@@ -9,21 +9,10 @@ class User {
    private $table = "users";
  
 
-
-
- 
-   
-
-    
-
     public function __construct() {
         global $pdo;
         $this->db = $pdo;
-     
-
-
-
-       
+    
 
      
     }
@@ -80,7 +69,17 @@ class User {
 
            
         ]);
-    }
+
+   }
+    public function getDoctorIdByUserId($userId)
+{
+    $stmt = $this->db->prepare("
+        SELECT id FROM doctors WHERE user_id = ?
+    ");
+    $stmt->execute([$userId]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 
   
 }
