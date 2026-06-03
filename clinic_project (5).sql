@@ -84,7 +84,9 @@ INSERT INTO `doctors` (`id`, `user_id`, `major_id`, `phone`, `image`, `descripti
 CREATE TABLE `majors` (
   `id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
-  `description` varchar(255) NOT NULL
+  `description` varchar(255) NOT NULL,
+   `image` varchar(255) DEFAULT 'major.jpg',
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
