@@ -1,15 +1,19 @@
 <?php
 
 use App\core\Helper;
-use App\Models\Appointment;
-
 
 $user = $_SESSION['user'];
 
-$appointments = Appointment::getPatientAppointments(
-    $pdo,
-    $user['id']
-);
+$sql = "SELECT a.*, u.name AS doctor_name, m.title AS major_title
+        FROM appointments a
+        JOIN doctors d ON a.doctor_id = d.id
+        JOIN users u ON d.user_id = u.id
+        JOIN majors m ON d.major_id = m.id
+        WHERE a.patient_id = ?
+        ORDER BY a.appointment_date DESC, a.appointment_time DESC";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$user['id']]);
+$appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -33,8 +37,7 @@ $appointments = Appointment::getPatientAppointments(
                 type="text"
                 class="form-control"
                 value="<?= $user['name']; ?>"
-                disabled
-            >
+                disabled>
 
         </div>
 
@@ -48,8 +51,7 @@ $appointments = Appointment::getPatientAppointments(
                 type="email"
                 class="form-control"
                 value="<?= $user['email']; ?>"
-                disabled
-            >
+                disabled>
 
         </div>
 
@@ -61,7 +63,7 @@ $appointments = Appointment::getPatientAppointments(
         My Appointments
     </h2>
     <?php Helper::showMessage(); ?>
-    <?php if(empty($appointments)): ?>
+    <?php if (empty($appointments)): ?>
 
         <div class="alert alert-info text-center">
 
@@ -73,71 +75,84 @@ $appointments = Appointment::getPatientAppointments(
 
         <div class="d-flex flex-column gap-4">
 
-            <?php foreach($appointments as $appointment): ?>
+            <?php foreach ($appointments as $appointment): ?>
 
-                
 
-                    <div class="card p-3 h-100" style="max-width: 700px;">
 
-                        <h4 class="mb-3">
+                <div class="card p-3 h-100" style="max-width: 700px;">
 
-                            Dr.
-                            <?= $appointment['doctor_name']; ?>
+                    <h4 class="mb-3">
 
-                        </h4>
+                        Dr.
+                        <?= $appointment['doctor_name']; ?>
 
-                        <p>
+                    </h4>
 
-                            <strong>Major:</strong>
+                    <p>
 
-                            <?= $appointment['major_title']; ?>
+                        <strong>Major:</strong>
 
-                        </p>
+                        <?= $appointment['major_title']; ?>
 
-                        <p>
+                    </p>
 
-                            <strong>Date:</strong>
+                    <p>
 
-                            <?= $appointment['appointment_date']; ?>
+                        <strong>Date:</strong>
 
-                        </p>
+                        <?= $appointment['appointment_date']; ?>
 
-                        <p>
+                    </p>
 
-                            <strong>Time:</strong>
+                    <p>
 
-                            <?= $appointment['appointment_time']; ?>
+                        <strong>Time:</strong>
 
-                        </p>
+                        <?= $appointment['appointment_time']; ?>
 
-                        <p>
+                    </p>
 
-                            <strong>Status:</strong>
+                    <p>
 
-                            <?= $appointment['status']; ?>
+                        <strong>Status:</strong>
 
-                        </p>
+                        <?php if ($appointment['status'] == 'pending'): ?>
 
-                      <?php if($appointment['status'] === 'pending'): ?>
+                            <span class="badge bg-warning text-dark">
+                                Pending
+                            </span>
 
-                       <a
-                            href="index.php?page=cancel-appointment&id=<?= $appointment['id']; ?>"
-                            class="btn btn-danger mt-3 w-auto px-4 align-self-start"
-                        >
-                            Cancel Appointment
+                        <?php elseif ($appointment['status'] == 'confirmed'): ?>
+
+                            <span class="badge bg-success">
+                                Confirmed
+                            </span>
+
+                        <?php elseif ($appointment['status'] == 'cancelled'): ?>
+
+                            <span class="badge bg-danger">
+                                Cancelled
+                            </span>
+
+                        <?php endif; ?>
+
+                    </p>
+
+                    <?php if ($appointment['status'] == 'pending'): ?>
+
+                        <a
+                            href="?page=cancel-appointment&id=<?= $appointment['id']; ?>"
+                            class="btn btn-danger"
+                            onclick="return confirm('Are you sure you want to cancel this appointment?');">
+                            Cancel
                         </a>
 
                     <?php endif; ?>
 
-                    </div>
-
-                
+                </div>
 
             <?php endforeach; ?>
 
         </div>
 
     <?php endif; ?>
-
-</div>
-

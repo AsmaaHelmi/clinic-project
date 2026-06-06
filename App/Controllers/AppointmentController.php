@@ -6,6 +6,60 @@ use App\Models\Appointment;
 use App\Core\Validator;
 $validator = new Validator();
 
+$action = $_GET['action'] ?? $_POST['action'] ?? null;
+
+if ($action) {
+
+    if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'doctor') {
+        Helper::redirect('?page=login');
+        exit();
+    }
+
+    $appointmentId = (int) ($_GET['id'] ?? 0);
+
+    if ($appointmentId <= 0) {
+        Helper::setMessage('danger', 'Invalid appointment ID');
+        Helper::redirect('?page=doctor-dashboard');
+        exit();
+    }
+
+    switch ($action) {
+
+        case 'confirm':
+            // استخدم SQL مباشر بدل الـ Model method
+            $sql = "UPDATE appointments SET status = 'confirmed' WHERE id = ?";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$appointmentId]);
+            Helper::setMessage('success', 'Appointment confirmed successfully');
+            break;
+
+        case 'cancel':
+            // Cancel موجود عندك خلينا نستخدمه مباشر
+            $sql = "UPDATE appointments SET status = 'cancelled' WHERE id = ?";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$appointmentId]);
+            Helper::setMessage('success', 'Appointment cancelled successfully');
+            break;
+
+        case 'delete':
+            // Delete مباشر
+            $sql = "DELETE FROM appointments WHERE id = ?";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$appointmentId]);
+            Helper::setMessage('success', 'Appointment deleted successfully');
+            break;
+
+        default:
+            Helper::setMessage('danger', 'Invalid action');
+            break;
+    }
+
+    Helper::redirect('?page=doctor-dashboard');
+    exit();
+}
+
+
+
 if (Helper::checkRequestMethod()) {
     $doctorId = (int) $_POST['doctor_id'];
     if (

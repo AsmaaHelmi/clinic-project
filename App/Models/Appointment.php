@@ -196,4 +196,18 @@ class Appointment
         return $stmt->execute([$appointmentId]);
     }
 
+    public static function updateStatus(PDO $pdo, int $id, string $status): bool
+{
+    $sql = "UPDATE appointments SET status = ? WHERE id = ?";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([$status, $id]);
+}
+
+public static function delete(PDO $pdo, int $id): bool
+{
+    $sql = "DELETE FROM appointments WHERE id = ?";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([$id]);
+}
+
 }
