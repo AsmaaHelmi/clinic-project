@@ -35,6 +35,7 @@
                                 <th>Date</th>
                                 <th>Time</th>
                                 <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
 
@@ -86,6 +87,54 @@
 
                                         </td>
 
+                                        <td class="project-actions">
+
+                                            <?php if ($appointment['status'] == 'pending'): ?>
+
+                                                <a href="index.php?page=appointment-controller&action=confirm&id=<?= $appointment['id'] ?>"
+                                                    class="btn btn-success btn-sm"
+                                                    title="Confirm Appointment"
+                                                    onclick="return confirm('Confirm this appointment?');">
+                                                    <i class="fas fa-check"></i> Confirm
+                                                </a>
+
+                                                <a href="index.php?page=appointment-controller&action=cancel&id=<?= $appointment['id'] ?>"
+                                                    class="btn btn-warning btn-sm"
+                                                    title="Cancel Appointment"
+                                                    onclick="return confirm('Are you sure you want to cancel this appointment?');">
+                                                    <i class="fas fa-times"></i> Cancel
+                                                </a>
+
+                                            <?php elseif ($appointment['status'] == 'confirmed'): ?>
+
+                                                <a href="index.php?page=appointment-controller&action=cancel&id=<?= $appointment['id'] ?>"
+                                                    class="btn btn-warning btn-sm"
+                                                    title="Cancel Appointment"
+                                                    onclick="return confirm('Are you sure you want to cancel this appointment?');">
+                                                    <i class="fas fa-times"></i> Cancel
+                                                </a>
+
+                                            <?php elseif ($appointment['status'] == 'completed'): ?>
+
+                                                <span class="text-muted">No Actions</span>
+
+                                            <?php elseif ($appointment['status'] == 'cancelled'): ?>
+
+                                                <span class="text-muted">Cancelled</span>
+
+                                            <?php endif; ?>
+
+
+                                            &nbsp;
+                                            <a href="index.php?page=appointment-controller&action=delete&id=<?= $appointment['id'] ?>"
+                                                class="btn btn-danger btn-sm"
+                                                title="Delete Appointment"
+                                                onclick="return confirm('Are you sure you want to delete this appointment? This action cannot be undone.');">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+
+                                        </td>
+
                                     </tr>
 
                                 <?php endforeach; ?>
@@ -93,7 +142,7 @@
                             <?php else: ?>
 
                                 <tr>
-                                    <td colspan="6" class="text-center">
+                                    <td colspan="7" class="text-center">
                                         No Appointments Found
                                     </td>
                                 </tr>
